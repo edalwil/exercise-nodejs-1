@@ -3,6 +3,10 @@ const express = require('express');
 
 //importaos los middlewares
 const { userExists } = require('../middlewares/user.middlewares');
+const {
+  ckeckValidator,
+  createValidator,
+} = require('../middlewares/validations.middlewares');
 
 //importamos contollers
 const {
@@ -19,7 +23,7 @@ const router = express.Router();
 // logica endpoint
 router.get('/', getAllUser);
 
-router.post('/', createUser);
+router.post('/', createValidator, ckeckValidator, createUser);
 
 // router.get('/:id', searchUserId);
 

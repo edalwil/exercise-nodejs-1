@@ -1,6 +1,9 @@
 //importamos model user
 const { User } = require('../models/user.model');
 
+//utilis
+const { AppError } = require('../utils/appError');
+
 //realizamos la funcion con req, res, next
 const userExists = async (req, res, next) => {
   try {
@@ -9,18 +12,14 @@ const userExists = async (req, res, next) => {
     const user = await User.findOne({ where: { id } });
 
     if (!user) {
-      return res.status(404).json({
-        status: 'error',
-        message: 'user not found given that id ',
-      });
+      return next(new AppError(`${id} does not exist`, 400));
     }
 
     //envio de infomacion del usuario encontrado
     req.user = user;
-
     next();
-  } catch (error) {
-    console.error(error);
+  } catch (err) {
+    next(err);
   }
 };
 

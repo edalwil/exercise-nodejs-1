@@ -1,9 +1,13 @@
 const { Repairs } = require('../models/repairs.model');
+const { User } = require('../models/user.model');
 
 //listado de reparaciones
 const getAllRepairs = async (req, res) => {
   try {
-    const repairs = await Repairs.findAll();
+    const repairs = await Repairs.findAll({
+      include: [{ model: User }],
+    });
+
     res.status(200).json({
       repairs,
     });
@@ -20,20 +24,20 @@ const searchRepairsId = async (req, res) => {
     res.status(200).json({
       repairs,
     });
-  } catch (error) {
-    console.log(error);
+  } catch (err) {
+    next(err);
   }
 };
 
 //crear nueva reparacion
 const createRepairs = async (req, res) => {
   try {
-    const { date, userid } = req.body;
-    const newRepairs = await Repairs.create({ date, userid });
+    const { date, userId } = req.body;
+    const newRepairs = await Repairs.create({ date, userId });
 
     res.status(201).json({ status: 'success' });
-  } catch (error) {
-    console.log(error);
+  } catch (err) {
+    next(err);
   }
 };
 
@@ -59,8 +63,8 @@ const deleteUser = async (req, res) => {
     await repairs.update({ status: 'canceled' });
 
     res.status(200).json({ status: 'success' });
-  } catch (error) {
-    console.error(error);
+  } catch (next) {
+    next(err);
   }
 };
 

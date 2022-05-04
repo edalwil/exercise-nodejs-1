@@ -1,36 +1,31 @@
 // importamos express
 const express = require('express');
+const cors = require('cors');
 
 //init express app
 const app = express();
+
+//controller
+const { errorGlobal } = require('./controllers/error.controllers');
+
+//habilitamos cors
+app.use(cors());
 
 //Routers
 const { userRouter } = require('./router/user.routes');
 const { repairsRouter } = require('./router/repairs.routes');
 
 //Utils
-const { db } = require('./utils/database');
+const { db } = require('./utils/dataBase');
 
 //Habilitar datos JSON entrantes
 app.use(express.json());
 
 // Endpoints
 app.use('/api/v1/users', userRouter);
-
 app.use('/api/v1/repairs', repairsRouter);
 
-// conecion base de datos
-db.authenticate()
-  .then(() => console.log('database authenticated'))
-  .catch((err) => console.log(err));
+//escucha de mis error globales
+app.use('*', errorGlobal);
 
-db.sync()
-  .then(() => console.log('database sync'))
-  .catch((err) => console.log(err));
-
-// girar el servidor
-const PORT = 5000;
-
-app.listen(PORT, () => {
-  console.log(`express app runngin on port: ${PORT}`);
-});
+module.exports = { app };

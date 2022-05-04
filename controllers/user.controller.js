@@ -8,7 +8,7 @@ const getAllUser = async (req, res) => {
       users,
     });
   } catch (error) {
-    console.log(error);
+    next(err);
   }
 };
 
@@ -20,25 +20,25 @@ const searchUserId = async (req, res) => {
     res.status(200).json({
       user,
     });
-  } catch (error) {
-    console.log(error);
+  } catch (err) {
+    next(err);
   }
 };
 
 //crear usuarios nuevo
-const createUser = async (req, res) => {
+const createUser = async (req, res, next) => {
   try {
     const { name, email, password, role } = req.body;
     const newUser = await User.create({ name, email, password, role });
 
     res.status(201).json({ status: 'success' });
-  } catch (error) {
-    res.status(400).json({ status: 'error' });
+  } catch (err) {
+    next(err);
   }
 };
 
 //modificar usuario
-const updateUser = async (req, res) => {
+const updateUser = async (req, res, next) => {
   try {
     const { user } = req;
     const { name, email } = req.body;
@@ -46,21 +46,21 @@ const updateUser = async (req, res) => {
     await user.update({ name, email });
 
     res.status(200).json({ status: 'success' });
-  } catch (error) {
-    console.error(error);
+  } catch (err) {
+    next(err);
   }
 };
 
 //eliminar usuario
-const deleteUser = async (req, res) => {
+const deleteUser = async (req, res, next) => {
   try {
     const { user } = req;
 
     await user.update({ status: 'delete' });
 
     res.status(200).json({ status: 'success' });
-  } catch (error) {
-    console.error(error);
+  } catch (err) {
+    next(err);
   }
 };
 

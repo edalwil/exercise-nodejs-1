@@ -1,6 +1,9 @@
 //importamos model user
 const { Repairs } = require('../models/repairs.model');
 
+//utils
+const { AppError } = require('../utils/appError');
+
 //realizamos la funcion con req, res, next
 const repairsExists = async (req, res, next) => {
   try {
@@ -8,19 +11,16 @@ const repairsExists = async (req, res, next) => {
 
     const repairs = await Repairs.findOne({ where: { id } });
 
-    if (!repairs) {
-      return res.status(404).json({
-        status: 'error',
-        message: 'user not found given that id ',
-      });
+    if (repairs.status === 'canceled') {
+      return next(new AppError('service is canceled', 400));
     }
 
     //envio de infomacion del usuario encontrado
     req.repairs = repairs;
 
     next();
-  } catch (error) {
-    console.error(error);
+  } catch (err) {
+    next(err);
   }
 };
 

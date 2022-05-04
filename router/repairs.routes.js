@@ -3,6 +3,10 @@ const express = require('express');
 
 //importamos los middlewares
 const { repairsExists } = require('../middlewares/repairs.middlewares');
+const {
+  ckeckValidator,
+  createRepairsValidation,
+} = require('../middlewares/validations.middlewares');
 
 //importamos controllers
 const {
@@ -18,7 +22,7 @@ const router = express.Router();
 
 //logica endpoint
 router.get('/', getAllRepairs);
-router.post('/', createRepairs);
+router.post('/', createRepairsValidation, ckeckValidator, createRepairs);
 router
   .route('/:id')
   .get(repairsExists, searchRepairsId)

@@ -1,5 +1,5 @@
 //importamos el archivo db de la caperta utils
-const { db } = require('../utils/database');
+const { db } = require('../utils/dataBase');
 
 //DataTypes(esto para que este valor puede ser leido en cualquier base de datos )
 const DataTypes = require('sequelize');
@@ -15,7 +15,7 @@ const Repairs = db.define('repairs', {
     type: DataTypes.DATE,
     allowNull: false,
   },
-  userid: {
+  userId: {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
