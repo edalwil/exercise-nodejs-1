@@ -1,19 +1,19 @@
 const { User } = require('../models/user.model');
 
 //listado de usuarios
-const getAllUser = async (req, res) => {
+const getAllUser = async (req, res, next) => {
   try {
     const users = await User.findAll();
     res.status(200).json({
       users,
     });
-  } catch (error) {
+  } catch (err) {
     next(err);
   }
 };
 
 //buscar usuario
-const searchUserId = async (req, res) => {
+const searchUserId = async (req, res, next) => {
   try {
     const { user } = req;
 

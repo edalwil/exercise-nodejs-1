@@ -2,7 +2,7 @@ const { Repairs } = require('../models/repairs.model');
 const { User } = require('../models/user.model');
 
 //listado de reparaciones
-const getAllRepairs = async (req, res) => {
+const getAllRepairs = async (req, res, next) => {
   try {
     const repairs = await Repairs.findAll({
       include: [{ model: User }],
@@ -11,13 +11,13 @@ const getAllRepairs = async (req, res) => {
     res.status(200).json({
       repairs,
     });
-  } catch (error) {
-    console.log(error);
+  } catch (err) {
+    next(err);
   }
 };
 
 //buscar reaparacion con id
-const searchRepairsId = async (req, res) => {
+const searchRepairsId = async (req, res, next) => {
   try {
     const { repairs } = req;
 
@@ -30,7 +30,7 @@ const searchRepairsId = async (req, res) => {
 };
 
 //crear nueva reparacion
-const createRepairs = async (req, res) => {
+const createRepairs = async (req, res, next) => {
   try {
     const { date, userId } = req.body;
     const newRepairs = await Repairs.create({ date, userId });
@@ -42,7 +42,7 @@ const createRepairs = async (req, res) => {
 };
 
 //actualizar reparaciones
-const updateRepairs = async (req, res) => {
+const updateRepairs = async (req, res, next) => {
   try {
     const { repairs } = req;
     const { status } = req.body;
@@ -50,20 +50,20 @@ const updateRepairs = async (req, res) => {
     await repairs.update({ status });
 
     res.status(200).json({ status: 'success' });
-  } catch (error) {
-    console.error(error);
+  } catch (err) {
+    console.error(err);
   }
 };
 
 //eliminar usuario
-const deleteUser = async (req, res) => {
+const deleteUser = async (req, res, next) => {
   try {
     const { repairs } = req;
 
     await repairs.update({ status: 'canceled' });
 
     res.status(200).json({ status: 'success' });
-  } catch (next) {
+  } catch (err) {
     next(err);
   }
 };
