@@ -1,5 +1,6 @@
 //importamos model user
 const { Repairs } = require('../models/repairs.model');
+const { User } = require('../models/user.model');
 
 //utils
 const { AppError } = require('../utils/appError');
@@ -9,10 +10,16 @@ const repairsExists = async (req, res, next) => {
   try {
     const { id } = req.params;
 
-    const repairs = await Repairs.findOne({ where: { id } });
+    const repairs = await Repairs.findOne({
+      where: { id },
+      include: [{ model: User }],
+    });
 
     if (repairs.status === 'canceled') {
-      return next(new AppError('service is canceled', 400));
+      res.status(400).json({
+        status: 'canceled',
+        message: 'service is canceled',
+      });
     }
 
     //envio de infomacion del usuario encontrado

@@ -20,7 +20,6 @@ const getAllRepairs = async (req, res, next) => {
 const searchRepairsId = async (req, res, next) => {
   try {
     const { repairs } = req;
-
     res.status(200).json({
       repairs,
     });
@@ -33,9 +32,15 @@ const searchRepairsId = async (req, res, next) => {
 const createRepairs = async (req, res, next) => {
   try {
     const { date, userId } = req.body;
-    const newRepairs = await Repairs.create({ date, userId });
 
-    res.status(201).json({ status: 'success' });
+    const createRepairs = await Repairs.create({
+      date,
+      userId,
+    });
+
+    res.status(200).json({
+      status: 'success',
+    });
   } catch (err) {
     next(err);
   }
@@ -51,7 +56,7 @@ const updateRepairs = async (req, res, next) => {
 
     res.status(200).json({ status: 'success' });
   } catch (err) {
-    console.error(err);
+    next(err);
   }
 };
 
