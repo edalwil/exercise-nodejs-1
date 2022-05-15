@@ -15,6 +15,19 @@ const createValidator = [
   body('role').notEmpty().withMessage('role cannot be empty'),
 ];
 
+const loginValidator = [
+  body('email')
+    .notEmpty()
+    .withMessage('email cannot be empty')
+    .isEmail()
+    .withMessage('must be a valid email'),
+  body('password')
+    .notEmpty()
+    .withMessage('password cannot be empty')
+    .isLength({ min: 8 })
+    .withMessage('password must be at least 8 characters'),
+];
+
 const createRepairsValidation = [
   body('date')
     .notEmpty()
@@ -39,4 +52,9 @@ const ckeckValidator = (req, res, next) => {
   next();
 };
 
-module.exports = { createValidator, ckeckValidator, createRepairsValidation };
+module.exports = {
+  loginValidator,
+  createValidator,
+  ckeckValidator,
+  createRepairsValidation,
+};

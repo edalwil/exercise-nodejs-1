@@ -17,12 +17,12 @@ db.authenticate()
   .then(() => console.log('database authenticated'))
   .catch((err) => console.log(err));
 
-db.sync()
+db.sync({ force: true })
   .then(() => console.log('database sync'))
   .catch((err) => console.log(err));
 
 // girar el servidor
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`express app runngin on port: ${PORT}`);
 });

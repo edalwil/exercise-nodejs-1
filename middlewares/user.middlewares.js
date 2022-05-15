@@ -12,17 +12,17 @@ const userExists = async (req, res, next) => {
     const user = await User.findOne({ where: { id } });
 
     if (!user) {
-      res.status(400).json({
-        status: 'error',
-        message: 'id don not exist',
-      });
+      return next(new AppError('user does not exist', 404));
     }
 
     //envio de infomacion del usuario encontrado
     req.user = user;
+
+    user.password = undefined;
+
     next();
-  } catch (err) {
-    next(err);
+  } catch (error) {
+    next(error);
   }
 };
 

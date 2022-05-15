@@ -1,12 +1,12 @@
-const errorGlobal = (err, req, res, next) => {
-  const statusCode = err.statusCode || 500;
-  const status = err.status || 'fail';
+const errorGlobal = (error, req, res, next) => {
+  const statusCode = error.statusCode || 500;
+  const status = error.status || 'fail';
 
   res.status(statusCode).json({
     status,
-    message: err.message,
-    error: err,
-    stack: err.stack,
+    message: error.message,
+    error: error,
+    stack: error.stack,
   });
 };
 

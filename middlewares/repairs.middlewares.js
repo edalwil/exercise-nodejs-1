@@ -16,18 +16,17 @@ const repairsExists = async (req, res, next) => {
     });
 
     if (repairs.status === 'canceled') {
-      res.status(400).json({
-        status: 'canceled',
-        message: 'service is canceled',
-      });
+      return next(new AppError('repairs is canceled', 404));
     }
 
     //envio de infomacion del usuario encontrado
     req.repairs = repairs;
 
+    repairs.password = undefined;
+
     next();
-  } catch (err) {
-    next(err);
+  } catch (error) {
+    next(error);
   }
 };
 
