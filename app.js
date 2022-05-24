@@ -28,7 +28,7 @@ app.use(helmet());
 app.use(compression());
 
 //add morgan
-if (process.env.NODE_ENV !== 'development') {
+if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 } else {
   app.use(morgan('combined'));
