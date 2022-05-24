@@ -1,6 +1,9 @@
 const express = require('express'); // importamos la libreria express
 const cors = require('cors'); //importamos la libreria cors
 const rateLimit = require('express-rate-limit'); // impotamos la libreria express-rate-limit
+const helmet = require('helmet'); //importam la libreria helmet
+const compression = require('compression'); //importamos la libreria compression
+const morgan = require('morgan'); //importamos la libreria morgan
 
 //init express app
 const app = express();
@@ -17,6 +20,19 @@ const { repairsRouter } = require('./router/repairs.routes');
 
 //Habilitar datos JSON entrantes
 app.use(express.json());
+
+//agregamos seguridad helmet
+app.use(helmet());
+
+//compression resposnes
+app.use(compression());
+
+//add morgan
+if (process.env.NODE_ENV !== 'development') {
+  app.use(morgan('dev'));
+} else {
+  app.use(morgan('combined'));
+}
 
 //limit ip requests
 const limiter = rateLimit({

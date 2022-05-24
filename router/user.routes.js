@@ -1,7 +1,7 @@
 //importamos express
 const express = require('express');
 
-//importaos los middlewares
+//importamos los middlewares
 const { userExists } = require('../middlewares/user.middlewares');
 const {
   ckeckValidator,
@@ -11,7 +11,6 @@ const {
 
 const {
   validatorToken,
-  validateEmployees,
   protectAccountOwner,
 } = require('../middlewares/validateToken.middlewares');
 
