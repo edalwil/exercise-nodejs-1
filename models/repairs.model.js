@@ -2,7 +2,7 @@
 const { db } = require('../utils/dataBase');
 
 //DataTypes(esto para que este valor puede ser leido en cualquier base de datos )
-const DataTypes = require('sequelize');
+const { DataTypes } = require('sequelize');
 
 const Repairs = db.define('repairs', {
   id: {
