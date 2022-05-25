@@ -23,6 +23,7 @@ db.sync()
 
 // girar el servidor
 const PORT = process.env.PORT || 5000;
+
 app.listen(PORT, () => {
   console.log(`express app runngin on port: ${PORT}`);
 });
