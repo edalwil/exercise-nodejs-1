@@ -14,7 +14,7 @@ Repairs.belongsTo(User);
 
 //autenticacion de credenciales de base de datos
 db.authenticate()
-  .then(() => console.log('database authenticated'))
+  .then(() => console.log('database and authenticated'))
   .catch((err) => console.log(err));
 
 db.sync()
