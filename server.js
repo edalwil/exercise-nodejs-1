@@ -2,7 +2,7 @@
 const { app } = require('./app');
 
 //importamos los datos de utils
-const { db } = require('./utils/database');
+const { db } = require('./utils/dataBase');
 
 //importamos los models
 const { User } = require('./models/user.model');
